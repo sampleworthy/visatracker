@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisaTrack - USCIS Visa Status Tracker</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #2dc653;
+            --warning: #f9c74f;
+            --danger: #ef476f;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/beach-sunset.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            transition: background-image 1s ease-in-out;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .search-box h2 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+        
+        .input-group button {
+            padding: 0 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .input-group button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .features {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        .dashboard {
+            padding: 80px 0;
+            background-color: #f5f7fa;
+        }
+        
+        .dashboard-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .dashboard-header {
+            padding: 30px;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .dashboard-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .dashboard-header p {
+            opacity: 0.9;
+        }
+        
+        .dashboard-content {
+            padding: 30px;
+        }
+        
+        .status-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .status-header h3 {
+            font-size: 20px;
+        }
+        
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 30px;
+            background-color: #e9f5ff;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .status-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .detail-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .detail-label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .progress-tracker {
+            margin-top: 50px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .progress-header h3 {
+            font-size: 20px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            margin-bottom: 50px;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: var(--gray-light);
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 20%;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: var(--gray);
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .step.active .step-icon {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step.completed .step-icon {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .step.completed .step-icon::after {
+            content: "✓";
+            position: absolute;
+        }
+        
+        .step-line {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 2px;
+            background-color: var(--success);
+            z-index: 1;
+        }
+        
+        .step-label {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .chart-container {
+            margin-top: 50px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-header h3 {
+            font-size: 20px;
+        }
+        
+        .similar-cases {
+            margin-top: 50px;
+        }
+        
+        .similar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .similar-header h3 {
+            font-size: 20px;
+        }
+        
+        .similar-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .similar-table th,
+        .similar-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .similar-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .similar-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #b7b9bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+            color: #b7b9bd;
+            font-size: 14px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--danger);
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .form-actions {
+            text-align: right;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .status-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-steps {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .progress-steps::before {
+                display: none;
+            }
+            
+            .step {
+                width: 100%;
+                flex-direction: row;
+                margin-bottom: 20px;
+            }
+            
+            .step-icon {
+                margin-right: 15px;
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🔍</div>
+                    Visa<span>Track</span>
+                </div>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div>
+                    <button class="btn btn-outline" onclick="openModal('loginModal')">Login</button>
+                    <button class="btn btn-primary" onclick="openModal('signupModal')">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Track Your Visa Status</h1>
+            <p>Stay updated on your visa application with real-time status tracking, estimated processing times, and personalized insights.</p>
+            <div class="search-box">
+                <h2>Check Your Visa Status</h2>
+                <div class="input-group">
+                    <input type="text" id="receipt-number" placeholder="Enter USCIS Receipt Number (e.g., EAC1234567890)" />
+                    <button onclick="checkStatus()">Track</button>
+                </div>
+                <p style="text-align: left; color: var(--gray); font-size: 14px;">
+                    Don't have an account? <a href="#" onclick="openModal('signupModal')" style="color: var(--primary);">Sign up</a> for notifications and more tracking features.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="dashboard" id="dashboard" style="display: none;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Visa Application Status</h2>
+                <p>Track your visa application status and get detailed insights on your case.</p>
+            </div>
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h2>Visa Application Status</h2>
+                    <p>Receipt Number: <span id="receipt-display">Enter a receipt number above</span></p>
+                </div>
+                <div class="dashboard-content">
+                    <div class="status-card">
+                        <div class="status-header">
+                            <h3>Current Status</h3>
+                            <div class="status-badge">Case Was Received</div>
+                        </div>
+                        <div class="status-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Last Updated</div>
+                                <div class="detail-value" id="last-updated">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Application Age</div>
+                                <div class="detail-value" id="app-age">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Estimated Processing Time</div>
+                                <div class="detail-value" id="est-time">-</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Status</div>
+                                <div class="detail-value" id="queue-pos">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-tracker">
+                        <div class="progress-header">
+                            <h3>Application Timeline</h3>
+                        </div>
+                        <div class="progress-steps">
+                            <div class="step-line" style="width: 20%;"></div>
+                            
+                            <div class="step active">
+                                <div class="step-icon">1</div>
+                                <div class="step-label">Receipt Issued</div>
+                            </div>
+                            
+                            <div class="step">
+                                <div class="step-icon">2</div>
+                                <div class="step-label">Initial Review</div>
+                            </div>
+                            
+                            <div class="step">
+                                <div class="step-icon">3</div>
+                                <div class="step-label">Request for Evidence</div>
+                            </div>
+                            
+                            <div class="step">
+                                <div class="step-icon">4</div>
+                                <div class="step-label">Decision</div>
+                            </div>
+                            
+                            <div class="step">
+                                <div class="step-icon">5</div>
+                                <div class="step-label">Post Decision</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="similar-cases">
+                        <div class="similar-header">
+                            <h3>Case History</h3>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="similar-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center; padding: 30px;">Enter a receipt number to view case history</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>VisaTrack</h3>
+                    <p style="color: #b7b9bd; margin-bottom: 20px;">
+                        Helping you navigate your visa journey with transparency and confidence.
+                    </p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Visa Guide</a></li>
+                        <li><a href="#">USCIS Updates</a></li>
+                        <li><a href="#">Processing Times</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><a href="mailto:support@visatrack.com">support@visatrack.com</a></li>
+                        <li><a href="tel:+18001234567">+1 (800) 123-4567</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VisaTrack. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <h2 class="modal-title">Login to Your Account</h2>
+            <div class="form-group">
+                <label for="login-email">Email Address</label>
+                <input type="email" id="login-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" onclick="login()">Login</button>
+            </div>
+            <p style="margin-top: 20px; text-align: center; font-size: 14px; color: var(--gray);">
+                Don't have an account? <a href="#" onclick="switchModal('loginModal', 'signupModal')" style="color: var(--primary);">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+            <h2 class="modal-title">Create Your Account</h2>
+            <div class="form-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email Address</label>
+                <input type="email" id="signup-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Create a password">
+            </div>
+            <div class="form-group">
+                <label for="signup-receipt">USCIS Receipt Number (Optional)</label>
+                <input type="text" id="signup-receipt" placeholder="e.g., EAC1234567890">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" onclick="signup()">Sign Up</button>
+            </div>
+            <p style="margin-top: 20px; text-align: center; font-size: 14px; color: var(--gray);">
+                Already have an account? <a href="#" onclick="switchModal('signupModal', 'loginModal')" style="color: var(--primary);">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Background image slideshow functionality
+        // To add new images, simply place them in the public/images folder with the naming pattern:
+        // slide1.jpg, slide2.jpg, slide3.jpg, etc.
+        
+        // Configuration
+        const imageBasePath = '/images/';    // Path to images directory
+        const imageSuffix = '.jpg';          // Image file extension (all must be the same)
+        const imagePrefix = 'slide';         // Image file prefix
+        const totalImages = 5;               // Total number of images to cycle through
+        const slideDuration = 60000;         // Duration in milliseconds (60000 = 1 minute)
+        
+        // Build image paths array
+        const backgroundImages = [];
+        for (let i = 1; i <= totalImages; i++) {
+            backgroundImages.push(`${imageBasePath}${imagePrefix}${i}${imageSuffix}`);
+        }
+        
+        let currentImageIndex = 0;
+        const heroSection = document.querySelector('.hero');
+        
+        // Function to change background image
+        function changeBackgroundImage() {
+            const nextImage = backgroundImages[currentImageIndex];
+            heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${nextImage}')`;
+            
+            // Move to next image
+            currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+        }
+        
+        // Initialize with first image
+        window.addEventListener('load', changeBackgroundImage);
+        
+        // Change image every minute (60000 milliseconds)
+        setInterval(changeBackgroundImage, slideDuration);
+        
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "flex";
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+        
+        function switchModal(currentModalId, newModalId) {
+            closeModal(currentModalId);
+            openModal(newModalId);
+        }
+        
+        // Login and signup functions
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                alert('Please enter both email and password.');
+                return;
+            }
+            
+            // Add loading spinner
+            const loginButton = document.querySelector('#loginModal .btn-primary');
+            loginButton.innerHTML = 'Logging in <span class="spinner"></span>';
+            
+            // Simulate API call (replace with actual implementation)
+            setTimeout(() => {
+                closeModal('loginModal');
+                alert('Login successful!');
+                loginButton.innerHTML = 'Login';
+            }, 1500);
+        }
+        
+        function signup() {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const receipt = document.getElementById('signup-receipt').value;
+            
+            if (!name || !email || !password) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Add loading spinner
+            const signupButton = document.querySelector('#signupModal .btn-primary');
+            signupButton.innerHTML = 'Signing up <span class="spinner"></span>';
+            
+            // Simulate API call (replace with actual implementation)
+            setTimeout(() => {
+                closeModal('signupModal');
+                alert('Account created successfully!');
+                signupButton.innerHTML = 'Sign Up';
+                
+                // If receipt number was provided, update the display
+                if (receipt) {
+                    document.getElementById('receipt-display').textContent = receipt;
+                    document.getElementById('receipt-number').value = receipt;
+                }
+            }, 1500);
+        }
+        
+        // Get case status from backend API
+        async function getCaseStatus(receiptNumber) {
+            try {
+                // Use a relative URL to connect to your Node.js backend
+                const apiUrl = `/api/case-status/${receiptNumber}`;
+                console.log(`Calling API at: ${apiUrl}`);
+                
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `Error: ${response.status}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error("Error fetching case status:", error);
+                throw error;
+            }
+        }
+
+        // Update the UI with the case status information from actual API response
+        function updateStatusUI(apiResponse) {
+            // Extract case data from the response structure
+            const caseData = apiResponse.case_status;
+            
+            // Update receipt number and form type
+            document.getElementById('receipt-display').textContent = 
+                caseData.receiptNumber + (caseData.formType ? ` (${caseData.formType})` : '');
+            
+            // Update status badge
+            document.querySelector('.status-badge').textContent = caseData.current_case_status_text_en;
+            
+            // Format dates for display
+            const submittedDate = new Date(caseData.submittedDate.split(' ')[0].replace(/-/g, '/'));
+            const modifiedDate = new Date(caseData.modifiedDate.split(' ')[0].replace(/-/g, '/'));
+            
+            // Update details
+            document.getElementById('last-updated').textContent = modifiedDate.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Calculate application age in days
+            const today = new Date();
+            const diffTime = Math.abs(today - submittedDate);
+            const appAge = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('app-age').textContent = `${appAge} days`;
+            
+            // Other fields - use placeholders if not available in the API response
+            document.getElementById('est-time').textContent = 'Based on recent data: 5-7 months';
+            
+            // Set status based on current status
+            const isApproved = caseData.current_case_status_text_en.toLowerCase().includes('approved');
+            document.getElementById('queue-pos').textContent = isApproved ? 
+                'Status: Processing completed' : 'Status: In processing';
+            
+            // Create case history table from hist_case_status
+            if (caseData.hist_case_status && caseData.hist_case_status.length > 0) {
+                const tableBody = document.querySelector('.similar-table tbody');
+                tableBody.innerHTML = ''; // Clear existing rows
+                
+                // Add the current status as the first item
+                const currentStatusRow = document.createElement('tr');
+                
+                const currentDateCell = document.createElement('td');
+                currentDateCell.textContent = modifiedDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit'
+                });
+                
+                const currentStatusCell = document.createElement('td');
+                currentStatusCell.textContent = caseData.current_case_status_text_en;
+                
+                const currentDescCell = document.createElement('td');
+                currentDescCell.textContent = caseData.current_case_status_desc_en;
+                
+                currentStatusRow.appendChild(currentDateCell);
+                currentStatusRow.appendChild(currentStatusCell);
+                currentStatusRow.appendChild(currentDescCell);
+                tableBody.appendChild(currentStatusRow);
+                
+                // Add historical statuses
+                caseData.hist_case_status.forEach(history => {
+                    const row = document.createElement('tr');
+                    
+                    const dateCell = document.createElement('td');
+                    const histDate = new Date(history.date);
+                    dateCell.textContent = histDate.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit'
+                    });
+                    
+                    const statusCell = document.createElement('td');
+                    // Use a generic status since the API doesn't provide a status title for history items
+                    statusCell.textContent = "Case Update";
+                    
+                    const descCell = document.createElement('td');
+                    descCell.textContent = history.completed_text_en;
+                    
+                    row.appendChild(dateCell);
+                    row.appendChild(statusCell);
+                    row.appendChild(descCell);
+                    
+                    tableBody.appendChild(row);
+                });
+                
+                // Update progress based on completion status
+                let progress = 100; // If status is "Case Was Approved", set to 100%
+                if (!isApproved) {
+                    // For non-approved cases, calculate progress based on steps
+                    const totalSteps = 5;
+                    const completedSteps = Math.min(1 + caseData.hist_case_status.length, totalSteps);
+                    progress = (completedSteps / totalSteps) * 100;
+                }
+                
+                // Update progress line
+                document.querySelector('.step-line').style.width = `${progress}%`;
+                
+                // Update step indicators based on completion status
+                const steps = document.querySelectorAll('.step');
+                
+                if (isApproved) {
+                    // Set all steps to completed for an approved case
+                    steps.forEach((step) => {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    });
+                } else {
+                    // For non-approved cases, set active step based on history length
+                    const activeStepIndex = Math.min(caseData.hist_case_status.length, steps.length - 1);
+                    
+                    steps.forEach((step, index) => {
+                        step.classList.remove('active', 'completed');
+                        if (index < activeStepIndex) {
+                            step.classList.add('completed');
+                        } else if (index === activeStepIndex) {
+                            step.classList.add('active');
+                        }
+                    });
+                }
+            }
+        }
+
+        // Main function to check case status
+        async function checkStatus() {
+            const receiptNumber = document.getElementById('receipt-number').value;
+            
+            if (!receiptNumber) {
+                alert('Please enter a USCIS Receipt Number.');
+                return;
+            }
+            
+            // Validate receipt number format
+            const receiptPattern = /^[A-Z]{3}[0-9]{10}$/;
+            if (!receiptPattern.test(receiptNumber)) {
+                alert('Please enter a valid USCIS Receipt Number in the format: XXX0000000000');
+                return;
+            }
+            
+            // Add loading spinner
+            const trackButton = document.querySelector('.input-group button');
+            const originalButtonText = trackButton.innerHTML;
+            trackButton.innerHTML = 'Checking <span class="spinner"></span>';
+            
+            try {
+                // Get case status directly from our backend
+                const apiResponse = await getCaseStatus(receiptNumber);
+                console.log("Case status retrieved:", apiResponse);
+                
+                // Update UI with case information
+                updateStatusUI(apiResponse);
+                
+                // Show the dashboard section
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // Scroll to dashboard section
+                document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                console.error("Error tracking visa status:", error);
+                alert(`Unable to retrieve case status: ${error.message}`);
+            } finally {
+                // Reset button
+                trackButton.innerHTML = originalButtonText;
+            }
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
