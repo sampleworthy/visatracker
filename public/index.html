@@ -479,9 +479,10 @@
         }
         
         footer {
-            background-color: var(--dark);
-            color: white;
+            background-color: white;
+            color: var(--dark);
             padding: 50px 0 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
         }
         
         .footer-content {
@@ -495,6 +496,7 @@
             font-size: 18px;
             margin-bottom: 20px;
             position: relative;
+            color: var(--dark);
         }
         
         .footer-column h3::after {
@@ -516,20 +518,20 @@
         }
         
         .footer-column ul li a {
-            color: #b7b9bd;
+            color: var(--gray);
             text-decoration: none;
             transition: color 0.3s;
         }
         
         .footer-column ul li a:hover {
-            color: white;
+            color: var(--primary);
         }
         
         .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             padding-top: 20px;
             text-align: center;
-            color: #b7b9bd;
+            color: var(--gray);
             font-size: 14px;
         }
 
@@ -672,8 +674,8 @@
                 </div>
                 <nav class="nav-menu">
                     <ul>
-                        <li><a href="#dashboard">Dashboard</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a href="https://wa.me/18001234567"><span style="color: #25D366;">WhatsApp</span> +</a></li>
                     </ul>
                 </nav>
                 <div>
@@ -805,7 +807,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>VisaTrack</h3>
-                    <p style="color: #b7b9bd; margin-bottom: 20px;">
+                    <p style="color: var(--gray); margin-bottom: 20px;">
                         Helping you navigate your visa journey with transparency and confidence.
                     </p>
                 </div>
